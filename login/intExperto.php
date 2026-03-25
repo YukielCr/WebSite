@@ -71,7 +71,8 @@ if (!isset($_SESSION['logueado']) || $_SESSION['logueado'] !== true) {
                         </li>
                     </ul>
                     <div class="d-block ms-auto">
-                        <a href="../includes/cerrar.php" class="btn btn-danger mt-3" style="width: 150px;">Cerrar Sesión</a>  
+                        <a href="../includes/cerrar.php" class="btn btn-danger mt-3" style="width: 150px;">Cerrar
+                            Sesión</a>
                     </div>
                 </div>
             </div>
@@ -181,10 +182,43 @@ if (!isset($_SESSION['logueado']) || $_SESSION['logueado'] !== true) {
 
             <div class="card shadow-sm p-4 mt-3">
                 <h3>Operacion de CRUD</h3>
-                
-                <p>Bienvenido, <strong><?php echo $_SESSION['usuario']; ?></strong></p>
-                
-                      
+
+                <p>Bienvenido, <strong>
+                        <?php echo $_SESSION['usuario']; ?>
+                    </strong></p>
+
+
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Nombre</th>
+                            <th scope="col">Descripcion</th>
+                            <th scope="col">Ruta IMagen</th>
+                            <th scope="col">Img</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">1</th>
+                            <td>Mark</td>
+                            <td>Otto</td>
+                            <td>@mdo</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">2</th>
+                            <td>Jacob</td>
+                            <td>Thornton</td>
+                            <td>@fat</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">3</th>
+                            <td>John</td>
+                            <td>Doe</td>
+                            <td>@social</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </section>
 

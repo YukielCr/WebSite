@@ -119,58 +119,10 @@
 
 
 
-    <h2 class="py-4 text-center">Acerca de:</h2>
+    <h2 class="py-4 text-center">Contactanos:</h2>
 
 
-    <section class="container-xxl">
-        <div class="row py-5">
-            <div class="col-sm-6 mb-3 mb-sm-0">
-                <div class="d-flex justify-content-center">
-                    <img src="img/profile.jpg" alt="Fotografía de perfil de usuario" class="img-fluid rounded-2"
-                        style="max-width: 500em; height: 25em; width: 25em;" loading="lazy">
-                </div>
-            </div>
-
-
-            <div class="col-sm-6">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title fs-3">Corona Ramos Kevin Yukiel</h5>
-                        <p class="card-text fs-6">Estudiante de Ingenieria en Sistemas Computacionales</p>
-                        <p class="card-text fs-6">Phone: 777 199 9763</p>
-                        <p class="card-text fs-6">Email: kevinyukielcoronaramos@gmail.com</p>
-                        <a href="#" class="btn btn-primary">Conatactame</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-
-            <div class="col-sm-6 mb-3 mb-sm-0">
-                <div class="d-flex justify-content-center">
-                    <img src="img/dog.jpg" alt="Fotografía de perfil de usuario" class="img-fluid rounded-2"
-                        style="max-width: 500em; height: 25em; width: 25em;" loading="lazy">
-                </div>
-            </div>
-
-            <div class="col-sm-6 mb-3 mb-sm-0">
-                <div class="card">
-                    <div class="card-body justify-content-start">
-                        <h5 class="card-title fs-3">Name</h5>
-                        <p class="card-text fs-6">Por llenar</p>
-                        <p class="card-text fs-6">Phone: </p>
-                        <p class="card-text fs-6">Email: </p>
-                        <a href="#" class="btn btn-primary disabled">Conatactame</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
-        
-        </div>
-    </section>
+    
 
 
     <footer class="mt-5">

@@ -32,7 +32,7 @@
                             <a class="nav-link" aria-current="page" href="acercDe.html">Acerca de</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Contactanos</a>
+                            <a class="nav-link" href="contactanos.php">Contactanos</a>
                         </li>
                     </ul>
                     <div class="d-block ms-auto">
