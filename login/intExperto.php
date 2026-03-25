@@ -1,3 +1,14 @@
+<?php
+// ESTO VA EN LA LÍNEA 1, ANTES DE CUALQUIER HTML
+session_start();
+
+// Si no existe la sesión, mandarlo de regreso al index
+if (!isset($_SESSION['logueado']) || $_SESSION['logueado'] !== true) {
+    header("Location: ../index.php");
+    exit();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -40,9 +51,9 @@
 <body class="bg-secondary text-bg-primary">
     <header>
         <nav class="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
-            <div class="container-xxl">
-                <a class="navbar-brand" href="index.html">
-                    <img src="img/logoindex.png" alt="Logo" width="39" height="39" class="d-inline-block">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="intExperto.php">
+                    <img src="../img/logoindex.png" alt="Logo" width="39" height="39" class="d-inline-block">
                     Mi pagina Web
                 </a>
                 <!--Boton de mas opciones-->
@@ -53,104 +64,24 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="acercDe.html">Acerca de</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" href="intExperto.html">Interfas Experto</a>
+                            <a class="nav-link active" href="intExperto.php">Interfas Experto</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#">Interfas Usuario</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Contactanos</a>
-                        </li>
                     </ul>
                     <div class="d-block ms-auto">
-                        <button type="button" class="btn btn-primary me-2" data-bs-toggle="modal"
-                            data-bs-target="#modal1">Registro</button>
-                        <button type="button" class="btn btn-secondary" data-bs-toggle="modal"
-                            data-bs-target="#modal2">Iniciar</button>
+                        <a href="../includes/cerrar.php" class="btn btn-danger mt-3" style="width: 150px;">Cerrar Sesión</a>  
                     </div>
                 </div>
             </div>
         </nav>
     </header>
 
-    <!-- Modal 1-->
-    <div class="modal fade" id="modal1" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-        aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Regristro</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <!--Formulario de registro Datos-->
-                    <form>
-                        <div class="mb-3">
-                            <label for="exampleInputEmail1" class="form-label">Usuario</label>
-                            <input type="email" class="form-control" id="exampleInputEmail1"
-                                aria-describedby="emailHelp">
-                            <div id="emailHelp" class="form-text">Es necesario color su usuario.</div>
-                        </div>
-                        <div class="mb-3">
-                            <label for="exampleInputPassword1" class="form-label">Contraseña</label>
-                            <input type="password" class="form-control" id="exampleInputPassword1">
-                        </div>
-                        <div class="mb-3 form-check">
-                            <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                            <label class="form-check-label" for="exampleCheck1">Check me out</label>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                    <button type="button" class="btn btn-primary">Registrar</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-    <!-- Modal 2-->
-    <div class="modal fade" id="modal2" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-        aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Login</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <!--Formulario de registro Datos-->
-                    <form>
-                        <div class="mb-3">
-                            <label for="exampleInputEmail1" class="form-label">Usuario</label>
-                            <input type="email" class="form-control" id="exampleInputEmail1"
-                                aria-describedby="emailHelp">
-                            <div id="emailHelp" class="form-text">Es necesario color su usuario.</div>
-                        </div>
-                        <div class="mb-3">
-                            <label for="exampleInputPassword1" class="form-label">Contraseña</label>
-                            <input type="password" class="form-control" id="exampleInputPassword1">
-                        </div>
-                        <div class="mb-3 form-check">
-                            <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                            <label class="form-check-label" for="exampleCheck1">Check me out</label>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                    <button type="button" class="btn btn-primary">Iniciar sesión</button>
-                </div>
-            </div>
-        </div>
-    </div>
 
 
     <main class="main-wrapper">
+        <!--Barra de navegacion lateral-->
         <div class="d-flex flex-column flex-shrink-0 p-3 text-bg-dark" style="width: 280px ">
             <a href="index.html"
                 class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
@@ -198,7 +129,7 @@
             <div class="dropdown">
                 <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
                     data-bs-toggle="dropdown" aria-expanded="false">
-                    <img src="img/logoindex.png" alt="" width="32" height="32" class="rounded-circle me-2" />
+                    <img src="../img/logoindex.png" alt="" width="32" height="32" class="rounded-circle me-2" />
                     <strong>Opciones</strong>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
@@ -216,12 +147,48 @@
 
 
         <!--Informacion del contenedor-->
-
         <section class="content-area">
             <div class="card shadow-sm p-4">
-                <h3>Aqui va a ir mi informacion</h3>
+
+                <h3>Agregar Enfermedad</h3>
+
+                <div style="grid-template-columns: 1fr 1fr;" class="d-grid gap-3">
+                    <div class="p-2">
+                        <form>
+                            <div class="mb-3">
+                                <label for="txtNombreEnfermedad" class="form-label fw-bold">Nombre</label>
+                                <input type="text" class="form-control" id="txtNombreEnfermedad"
+                                    aria-describedby="emailHelp" placeholder="Nombre de la Enfermedad, Eje: Covid-19">
+                            </div>
+                            <div class="mb-3">
+                                <label for="txtDescripcionEnfermedad" class="form-label fw-bold">Descripcion</label>
+                                <input type="text" class="form-control" id="txtDescripcionEnfermedad"
+                                    placeholder="Descripcion de la Enfermedad, Eje: Dolor de cabeza">
+                            </div>
+                            <div class="mb-3">
+                                <label for="fileImageForEnfermedad" class="form-label fw-bold">Imagen</label>
+                                <input type="file" class="form-control" id="fileImageForEnfermedad">
+                            </div>
+                            <button type="submit" class="btn btn-primary">Subir</button>
+                        </form>
+                    </div>
+                    <div class="p-2 align-content-center text-center">
+                        <img src="../img/profile.jpg" class="img-thumbnail" alt="..." height="400rem">
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="card shadow-sm p-4 mt-3">
+                <h3>Operacion de CRUD</h3>
+                
+                <p>Bienvenido, <strong><?php echo $_SESSION['usuario']; ?></strong></p>
+                
+                      
             </div>
         </section>
+
+
     </main>
 
 

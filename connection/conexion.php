@@ -3,7 +3,7 @@
 $host     = "localhost";
 $user     = "root";
 $password = "Angriter305";
-$database = "enfermedades";
+$database = "webSite";
 
 $conexion = mysqli_connect($host, $user, $password, $database);
 if (!$conexion) {
