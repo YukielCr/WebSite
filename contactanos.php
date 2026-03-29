@@ -108,7 +108,7 @@
 
 
 
-    <!-- Modal 1 Registro-->
+    <!-- Modal 1-->
     <div class="modal fade" id="modal1" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
         aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -119,27 +119,29 @@
                 </div>
                 <div class="modal-body">
                     <!--Formulario de registro Datos-->
-                    <form>
+                    <form action="php/newUsuario.php" method="POST">
+
                         <div class="mb-3">
-                            <label for="exampleInputEmail1" class="form-label">Usuario</label>
-                            <input type="email" class="form-control" id="exampleInputEmail1"
+                            <label for="txtUsuario" class="form-label">Usuario</label>
+                            <input name="usuario" type="text" class="form-control" id="txtUsuario"
                                 aria-describedby="emailHelp">
                             <div id="emailHelp" class="form-text">Es necesario color su usuario.</div>
                         </div>
+
                         <div class="mb-3">
-                            <label for="exampleInputPassword1" class="form-label">Contraseña</label>
-                            <input type="password" class="form-control" id="exampleInputPassword1">
+                            <label for="txtContrasema" class="form-label">Contraseña</label>
+                            <input name="contrasena" type="password" class="form-control" id="txtContrasema">
                         </div>
-                        <div class="mb-3 form-check">
-                            <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                            <label class="form-check-label" for="exampleCheck1">Check me out</label>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                            <button type="submit" name="btnIngresar" class="btn btn-primary">Registrar</button>
                         </div>
+
                     </form>
+
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                    <button type="button" class="btn btn-primary">Registrar</button>
-                </div>
+
             </div>
         </div>
     </div>

@@ -155,20 +155,20 @@ if (!isset($_SESSION['logueado']) || $_SESSION['logueado'] !== true) {
 
                 <div style="grid-template-columns: 1fr 1fr;" class="d-grid gap-3">
                     <div class="p-2">
-                        <form>
+                        <form action="../addEnfermedad/altas.php" method="post" enctype="multipart/form-data">
                             <div class="mb-3">
                                 <label for="txtNombreEnfermedad" class="form-label fw-bold">Nombre</label>
-                                <input type="text" class="form-control" id="txtNombreEnfermedad"
+                                <input name="nombre" type="text" class="form-control" id="txtNombreEnfermedad"
                                     aria-describedby="emailHelp" placeholder="Nombre de la Enfermedad, Eje: Covid-19">
                             </div>
                             <div class="mb-3">
                                 <label for="txtDescripcionEnfermedad" class="form-label fw-bold">Descripcion</label>
-                                <input type="text" class="form-control" id="txtDescripcionEnfermedad"
+                                <input name="descripcion" type="text" class="form-control" id="txtDescripcionEnfermedad"
                                     placeholder="Descripcion de la Enfermedad, Eje: Dolor de cabeza">
                             </div>
                             <div class="mb-3">
                                 <label for="fileImageForEnfermedad" class="form-label fw-bold">Imagen</label>
-                                <input type="file" class="form-control" id="fileImageForEnfermedad">
+                                <input type="file" class="form-control" name="imagen" accept="image/*" onchange="mostrarImagen(event)">
                             </div>
                             <button type="submit" class="btn btn-primary">Subir</button>
                         </form>
@@ -231,6 +231,19 @@ if (!isset($_SESSION['logueado']) || $_SESSION['logueado'] !== true) {
         integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
         crossorigin="anonymous"></script>
     <script src="js/sidebars.js" class="astro-vvvwv3sm"></script>
+
+
+    <script>
+        function mostrarImagen(event) {
+            const archivo = event.target.files[0];
+            if (archivo) {
+                const urlTemporal = URL.createObjectURL(archivo);
+                const imagenPreview = document.getElementById('vista-previa');
+                imagenPreview.src = urlTemporal;
+                imagenPreview.style.display = 'block';
+            }
+        }
+    </script>
 </body>
 
 </html>
