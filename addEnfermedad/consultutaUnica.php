@@ -14,7 +14,7 @@ if (isset($_GET['nombre']) && !empty(trim($_GET['nombre']))) {
     $nombre_buscado = trim($_GET['nombre']);
     
     // Buscamos la enfermedad
-    $sql = "SELECT * FROM registro_enfermedades WHERE nombre = ?";
+    $sql = "SELECT * FROM registro_enfermedades WHERE id = ?";
     
     if ($stmt = mysqli_prepare($conexion, $sql)) {
         mysqli_stmt_bind_param($stmt, "s", $nombre_buscado);

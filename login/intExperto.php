@@ -196,7 +196,7 @@ if (!isset($_SESSION['logueado']) || $_SESSION['logueado'] !== true) {
 
                 <div class="mb-3">
                     <form class="d-flex mt-3" role="search" onsubmit="return false;">
-                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"
+                        <input class="form-control me-2" type="number" placeholder="Coloca el Id" aria-label="Search"
                             name="enfe" />
                         <button class="btn btn-success" type="button" onclick="ejecutarConsulta()">Buscar</button>
                     </form>
