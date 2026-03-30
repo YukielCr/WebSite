@@ -49,6 +49,11 @@ if (!isset($_SESSION['logueado']) || $_SESSION['logueado'] !== true) {
 </head>
 
 <body class="bg-secondary text-bg-primary">
+    <?php
+    require "../connection/conexion.php";
+    require "../addEnfermedad/eliminar.php";
+    require "../addEnfermedad/editar.php";
+    ?>
     <header>
         <nav class="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
             <div class="container-fluid">
@@ -71,7 +76,7 @@ if (!isset($_SESSION['logueado']) || $_SESSION['logueado'] !== true) {
                         </li>
                     </ul>
                     <div class="d-block ms-auto">
-                        <a href="../includes/cerrar.php" class="btn btn-danger mt-3" style="width: 150px;">Cerrar
+                        <a href="../includes/cerrar.php" class="btn btn-danger " style="width: 150px;">Cerrar
                             Sesión</a>
                     </div>
                 </div>
@@ -84,7 +89,7 @@ if (!isset($_SESSION['logueado']) || $_SESSION['logueado'] !== true) {
     <main class="main-wrapper">
         <!--Barra de navegacion lateral-->
         <div class="d-flex flex-column flex-shrink-0 p-3 text-bg-dark" style="width: 280px ">
-            <a href="index.html"
+            <a href="intExperto.php"
                 class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
                 <svg class="bi pe-none me-2" width="40" height="32" aria-hidden="true">
                     <use xlink:href="#bootstrap"></use>
@@ -150,75 +155,154 @@ if (!isset($_SESSION['logueado']) || $_SESSION['logueado'] !== true) {
         <!--Informacion del contenedor-->
         <section class="content-area">
             <div class="card shadow-sm p-4">
-
                 <h3>Agregar Enfermedad</h3>
-
                 <div style="grid-template-columns: 1fr 1fr;" class="d-grid gap-3">
                     <div class="p-2">
                         <form action="../addEnfermedad/altas.php" method="post" enctype="multipart/form-data">
                             <div class="mb-3">
                                 <label for="txtNombreEnfermedad" class="form-label fw-bold">Nombre</label>
                                 <input name="nombre" type="text" class="form-control" id="txtNombreEnfermedad"
-                                    aria-describedby="emailHelp" placeholder="Nombre de la Enfermedad, Eje: Covid-19">
+                                    aria-describedby="emailHelp" placeholder="Nombre de la Enfermedad, Eje: Covid-19"
+                                    required>
                             </div>
                             <div class="mb-3">
                                 <label for="txtDescripcionEnfermedad" class="form-label fw-bold">Descripcion</label>
                                 <input name="descripcion" type="text" class="form-control" id="txtDescripcionEnfermedad"
-                                    placeholder="Descripcion de la Enfermedad, Eje: Dolor de cabeza">
+                                    placeholder="Descripcion de la Enfermedad, Eje: Dolor de cabeza" required>
                             </div>
                             <div class="mb-3">
                                 <label for="fileImageForEnfermedad" class="form-label fw-bold">Imagen</label>
-                                <input type="file" class="form-control" name="imagen" accept="image/*" onchange="mostrarImagen(event)">
+                                <input type="file" class="form-control" name="imagen" accept="image/*"
+                                    onchange="mostrarImagen(event)">
                             </div>
-                            <button type="submit" class="btn btn-primary">Subir</button>
+                            <button type="submit" class="btn btn-primary">Guardar</button>
+                            <button type="reset" class="btn btn-secondary">Eliminar</button>
                         </form>
                     </div>
-                    <div class="p-2 align-content-center text-center">
-                        <img src="../img/profile.jpg" class="img-thumbnail" alt="..." height="400rem">
+                    <div class="p-2 align-items-center justify-content-center text-center">
+                        <div class="mx-auto p-2" style="width: 400px;">
+                            <img id="vista-previa" src="../img/profile.jpg" class="img-thumbnail" alt="..."
+                                style="max-height: 280px; text-align: center;">
+                        </div>
                     </div>
                 </div>
-
             </div>
 
             <div class="card shadow-sm p-4 mt-3">
-                <h3>Operacion de CRUD</h3>
-
+                <h3 class="text-center">Operacion de CRUD</h3>
                 <p>Bienvenido, <strong>
                         <?php echo $_SESSION['usuario']; ?>
                     </strong></p>
 
+                <div class="mb-3">
+                    <form class="d-flex mt-3" role="search" onsubmit="return false;">
+                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"
+                            name="enfe" />
+                        <button class="btn btn-success" type="button" onclick="ejecutarConsulta()">Buscar</button>
+                    </form>
+                </div>
 
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Nombre</th>
-                            <th scope="col">Descripcion</th>
-                            <th scope="col">Ruta IMagen</th>
-                            <th scope="col">Img</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <th scope="row">1</th>
-                            <td>Mark</td>
-                            <td>Otto</td>
-                            <td>@mdo</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">2</th>
-                            <td>Jacob</td>
-                            <td>Thornton</td>
-                            <td>@fat</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">3</th>
-                            <td>John</td>
-                            <td>Doe</td>
-                            <td>@social</td>
-                        </tr>
-                    </tbody>
-                </table>
+
+
+                <!--Creacion de la Tabla de Enfermedades-->
+                <div class="table-responsive">
+                    <table class="table table-hover table-striped align-middle">
+                        <!--Encabezados de la tabla-->
+                        <thead class="table-primary">
+                            <tr>
+                                <th scope="col" class="text-center">ID</th>
+                                <th scope="col">Nombre</th>
+                                <th scope="col">Descripcion</th>
+                                <th scope="col">Ruta Imagen</th>
+                                <th scope="col" class="text-center">Imagen</th>
+                                <th scope="col" class="text-center">Acciones</th>
+                            </tr>
+                        </thead>
+                        <!--Informacion de la tabla-->
+                        <tbody>
+                            <?php
+                            $sql = $conexion->query("SELECT * FROM registro_enfermedades");
+                            while ($datos = $sql->fetch_object()) {
+                                // Ajustamos la ruta de la imagen
+                                $ruta_imagen = $datos->ruta_imagen;
+                                ?>
+                                <tr>
+                                    <th scope="row" class="text-center">
+                                        <?php echo $datos->id ?>
+                                    </th>
+                                    <td class="fw-semibold text-primary">
+                                        <?php echo $datos->nombre ?>
+                                    </td>
+                                    <td>
+                                        <?php echo $datos->descripcion ?>
+                                    </td>
+                                    <td class="text-muted small">
+                                        <?php echo $datos->ruta_imagen ?>
+                                    </td>
+                                    <td class="text-center">
+                                        <img width="80" height="80" src="<?= $ruta_imagen ?>" alt="enfermedad"
+                                            class="img-thumbnail rounded" style="object-fit: cover;">
+                                    </td>
+                                    <td class="text-center">
+                                        <div>
+                                            <a data-bs-toggle="modal"
+                                                data-bs-target="#staticBackdropEditar<?= $datos->id ?>"
+                                                class="btn btn-warning btn-sm fw-bold">Editar</a>
+                                            <a href="intExperto.php?id=<?= $datos->id ?>"
+                                                class="btn btn-danger btn-sm fw-bold"
+                                                onclick="return eliminar()">Eliminar</a>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <!--Modal para modificar los dartos-->
+                                <div class="modal fade" id="staticBackdropEditar<?= $datos->id ?>" tabindex="-1"
+                                    aria-labelledby="staticBackdropLabel">
+                                    <div class="modal-dialog modal-dialog-centered">
+                                        <div class="modal-content border-0 shadow">
+                                            <div class="modal-header bg-warning">
+                                                <h5 class="modal-title fw-bold" id="staticBackdropLabel">Modificar
+                                                    Enfermedad</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body p-4">
+                                                <form action="" enctype="multipart/form-data" method="post">
+                                                    <input type="hidden" value="<?= $datos->id ?>" name="id">
+                                                    <input type="hidden" value="<?= $datos->ruta_imagen ?>"
+                                                        name="ruta_actual">
+
+                                                    <div class="mb-3">
+                                                        <label class="form-label fw-bold">Nombre:</label>
+                                                        <input type="text" class="form-control" name="nombre"
+                                                            value="<?= $datos->nombre ?>" required>
+                                                    </div>
+
+                                                    <div class="mb-3">
+                                                        <label class="form-label fw-bold">Descripción:</label>
+                                                        <textarea name="descripcion" class="form-control" rows="3"
+                                                            required><?= $datos->descripcion ?></textarea>
+                                                    </div>
+
+                                                    <div class="mb-4">
+                                                        <label class="form-label fw-bold">Nueva Imagen (Opcional):</label>
+                                                        <input type="file" class="form-control" name="imagen">
+                                                    </div>
+
+                                                    <div class="d-grid">
+                                                        <input type="submit" value="Guardar Cambios" name="btneditar"
+                                                            class="btn btn-success fw-bold">
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            <?php } ?>
+                        </tbody>
+                    </table>
+                </div>
+
             </div>
         </section>
 
@@ -233,6 +317,7 @@ if (!isset($_SESSION['logueado']) || $_SESSION['logueado'] !== true) {
     <script src="js/sidebars.js" class="astro-vvvwv3sm"></script>
 
 
+    <!--Mostrar la imagen-->
     <script>
         function mostrarImagen(event) {
             const archivo = event.target.files[0];
@@ -244,6 +329,63 @@ if (!isset($_SESSION['logueado']) || $_SESSION['logueado'] !== true) {
             }
         }
     </script>
+
+    <!--Eliminar-->
+    <script>
+        function eliminar() {
+            let res = confirm("¿Desea eliminar este registro permanentemente?");
+            return res;
+        }
+    </script>
+
+    <!--Consultar-->
+    <script>
+        async function ejecutarConsulta() {
+            let nombreEnfermedad = document.querySelector('input[name="enfe"]').value;
+
+            if (nombreEnfermedad.trim() === "") {
+                alert("Por favor, escribe el nombre de la enfermedad que deseas buscar.");
+                return;
+            }
+
+            try {
+                let respuesta = await fetch('../addEnfermedad/consultutaUnica.php?nombre=' + encodeURIComponent(nombreEnfermedad));
+                let datos = await respuesta.json();
+
+                if (datos.error) {
+                    alert(datos.mensaje);
+                    document.querySelector('textarea[name="descripcion"]').value = "";
+                    document.getElementById('vista-previa').style.display = 'none';
+                } else {
+                    // 1. Llenamos el Nombre
+                    let campoNombre = document.querySelector('input[name="nombre"]');
+                    if (campoNombre) {
+                        campoNombre.value = datos.nombre;
+                    }
+
+                    // 2. Llenamos la Descripción (Usamos corchetes para que funcione sea input o textarea)
+                    let campoDescripcion = document.querySelector('[name="descripcion"]');
+                    if (campoDescripcion) {
+                        campoDescripcion.value = datos.descripcion;
+                    }
+
+                    // 3. Mostramos la Imagen
+                    const imagenPreview = document.getElementById('vista-previa');
+                    if (datos.ruta_imagen && datos.ruta_imagen.trim() !== "") {
+                        let rutaLimpia = datos.ruta_imagen.replace("../../images/", "../images/");
+                        imagenPreview.src = rutaLimpia;
+                        imagenPreview.style.display = 'block';
+                    } else {
+                        imagenPreview.style.display = 'none';
+                    }
+                }
+            } catch (error) {
+                console.error("Error Fetch:", error);
+                alert("Error de conexión. Revisa la consola.");
+            }
+        }
+    </script>
+
 </body>
 
 </html>
