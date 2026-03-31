@@ -15,8 +15,8 @@ if (!isset($_SESSION['logueado']) || $_SESSION['logueado'] !== true) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Enfermedades</title>
-    <link rel="icon" href="img/logoindex.png">
+    <title>Sintomas</title>
+    <link rel="icon" href="../img/logoindex.png">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <link rel="stylesheet" href="css/sidebars.css">
@@ -99,7 +99,7 @@ if (!isset($_SESSION['logueado']) || $_SESSION['logueado'] !== true) {
             <hr />
             <ul class="nav nav-pills flex-column mb-auto">
                 <li class="nav-item">
-                    <a href="#" class="nav-link active" aria-current="page">
+                    <a href="intExperto.php" class="nav-link text-white">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                             class="bi bi-bandaid" viewBox="0 0 16 16">
                             <path
@@ -111,7 +111,7 @@ if (!isset($_SESSION['logueado']) || $_SESSION['logueado'] !== true) {
                     </a>
                 </li>
                 <li>
-                    <a href="intExpertoSintomas.php" class="nav-link text-white">
+                    <a href="intExpertoSintomas.php" class="nav-link active" aria-current="page">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                             class="bi bi-lungs-fill" viewBox="0 0 16 16">
                             <path
@@ -155,7 +155,7 @@ if (!isset($_SESSION['logueado']) || $_SESSION['logueado'] !== true) {
         <!--Informacion del contenedor-->
         <section class="content-area">
             <div class="card shadow-sm p-4">
-                <h3 class="text-center">Agregar Enfermedad</h3>
+                <h3 class="text-center">Agregar Sintomas</h3>
                 <div style="grid-template-columns: 1fr 1fr;" class="d-grid gap-3">
                     <div class="p-2">
                         <form id="formEnfermedad" action="../addEnfermedad/altas.php" method="post"
@@ -185,7 +185,7 @@ if (!isset($_SESSION['logueado']) || $_SESSION['logueado'] !== true) {
                     </div>
                     <div class="p-2 align-items-center justify-content-center text-center">
                         <div class="mx-auto p-2" style="width: 400px;">
-                            <img id="vista-previa" src="../img/profile.jpg" class="img-thumbnail" alt="..."
+                            <img id="vista-previa" src="../img/dog.jpg" class="img-thumbnail" alt="..."
                                 style="max-height: 280px; text-align: center;">
                         </div>
                     </div>
@@ -225,7 +225,7 @@ if (!isset($_SESSION['logueado']) || $_SESSION['logueado'] !== true) {
                         <!--Informacion de la tabla-->
                         <tbody>
                             <?php
-                            $sql = $conexion->query("SELECT * FROM registro_enfermedades");
+                            $sql = $conexion->query("SELECT * FROM registro_Sintomas");
                             while ($datos = $sql->fetch_object()) {
                                 // Ajustamos la ruta de la imagen
                                 $ruta_imagen = $datos->ruta_imagen;
