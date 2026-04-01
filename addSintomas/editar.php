@@ -1,5 +1,5 @@
 <?php
-if (!empty($_POST["btneditar"])) {
+if (!empty($_POST["btneditar2"])) {
     $id = $_POST["id"];
     $nombre = $_POST["nombre"];
     $descripcion = $_POST["descripcion"];
@@ -23,7 +23,7 @@ if (!empty($_POST["btneditar"])) {
             $ruta_destino = $directorio . time() . "_" . basename($nombreimagen);
 
             if (move_uploaded_file($imagen, $ruta_destino)) {
-                $sql = "UPDATE registro_enfermedades SET nombre=?, descripcion=?, ruta_imagen=? WHERE id=?";
+                $sql = "UPDATE registro_Sintomas SET nombre=?, descripcion=?, ruta_imagen=? WHERE id=?";
                 $stmt = mysqli_prepare($conexion, $sql);
                 mysqli_stmt_bind_param($stmt, "sssi", $nombre, $descripcion, $ruta_destino, $id);
                 $ejecutar = mysqli_stmt_execute($stmt);
@@ -37,7 +37,7 @@ if (!empty($_POST["btneditar"])) {
             $clase = "alert-danger";
         }
     } else {
-        $sql = "UPDATE registro_enfermedades SET nombre=?, descripcion=? WHERE id=?";
+        $sql = "UPDATE registro_Sintomas SET nombre=?, descripcion=? WHERE id=?";
         $stmt = mysqli_prepare($conexion, $sql);
         mysqli_stmt_bind_param($stmt, "ssi", $nombre, $descripcion, $id);
         $ejecutar = mysqli_stmt_execute($stmt);

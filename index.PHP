@@ -46,7 +46,6 @@
         </nav>
     </header>
 
-
     <section>
         <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
             <div class="carousel-indicators">
@@ -57,29 +56,50 @@
                 <button type="button" data-bs-target="#carouselExampleSlidesOnly" data-bs-slide-to="2"
                     aria-label="Slide 3"></button>
             </div>
+
             <div class="carousel-inner">
                 <div class="carousel-item active">
-                    <img src="img/carru1.jpeg" class="d-block w-100" alt="...">
-                    <div class="carousel-caption ">
-                        <h5>Primero</h5>
-                        <p>Prueba de lo que se puede hacer</p>
+                    <img src="img/carru1.jpeg" class="d-block w-100" style="filter: brightness(0.8);" alt="...">
+
+                    <div class="carousel-caption d-flex flex-column justify-content-center align-items-center h-100"
+                        style="top: 0; bottom: 0;">
+
+                        <h3 class="fw-bold mb-2 text-uppercase" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.8);">I.T.Z
+                        </h3>
+                        <h3 class="fw-bold mb-3 text-uppercase" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.8);">I.A
+                        </h3>
+                        <h3 class="mb-5" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.8);">Sistemas Expertos para
+                            Diagnóstico de Enfermedades</h3>
+
+                        <div class="d-flex justify-content-center align-items-center gap-4">
+                            <img src="img/logo1.png" alt="Logo 1" class="img-fluid"
+                                style="max-height: 120px; width: auto; filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.5));">
+
+                            <img src="img/logo2.png" alt="Logo 2" class="img-fluid"
+                                style="max-height: 120px; width: auto; filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.5));">
+                        </div>
                     </div>
                 </div>
+
                 <div class="carousel-item">
-                    <img src="img/carru2.jpg" class="d-block w-100" alt="...">
-                    <div class="carousel-caption d-none d-md-block">
-                        <h5>Segundo</h5>
-                        <p>Prueba de lo que se puede hacer</p>
+                    <img src="img/carru2.jpg" class="d-block w-100" style="filter: brightness(0.8);" alt="...">
+                    <div class="carousel-caption d-flex flex-column justify-content-center align-items-center h-100"
+                        style="top: 0; bottom: 0;">
+                        <h3 class="fw-bold mb-2 text-uppercase" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.8);">Segundo
+                        </h3>
                     </div>
                 </div>
+
                 <div class="carousel-item">
-                    <img src="img/carru3.jpg" class="d-block w-100" alt="...">
-                    <div class="carousel-caption d-none d-md-block">
-                        <h5>Tercero</h5>
-                        <p>Prueba de lo que se puede hacer</p>
+                    <img src="img/carru3.jpg" class="d-block w-100" style="filter: brightness(0.8);" alt="...">
+                    <div class="carousel-caption d-flex flex-column justify-content-center align-items-center h-100"
+                        style="top: 0; bottom: 0;">
+                        <h3 class="fw-bold mb-2 text-uppercase" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.8);">Tercero
+                        </h3>
                     </div>
                 </div>
             </div>
+
             <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleSlidesOnly"
                 data-bs-slide="prev">
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -267,7 +287,7 @@
                 <div class="modal-body">
                     <!--Formulario de registro Datos-->
                     <form action="includes/login.php" method="POST">
-                        <?php if(isset($_GET['error'])): ?>
+                        <?php if (isset($_GET['error'])): ?>
                         <div class="alert alert-danger">Usuario o contraseña incorrectos</div>
                         <?php endif; ?>
 
