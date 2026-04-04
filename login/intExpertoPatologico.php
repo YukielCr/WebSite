@@ -7,6 +7,16 @@ if (!isset($_SESSION['logueado']) || $_SESSION['logueado'] !== true) {
     header("Location: ../index.php");
     exit();
 }
+
+include("../connection/conexion.php"); 
+// Consultas a la Base de Datos
+// Tabla de Enfermedades
+$queryEnfermedades = "SELECT id, nombre, ruta_imagen FROM registro_enfermedades";
+$resultadoEnfermedades = mysqli_query($conexion, $queryEnfermedades);
+
+//Sintomas
+$querySintomas = "SELECT id, nombre, ruta_imagen FROM registro_Sintomas";
+$resultadoSintomas = mysqli_query($conexion, $querySintomas);
 ?>
 
 <!DOCTYPE html>
@@ -15,7 +25,7 @@ if (!isset($_SESSION['logueado']) || $_SESSION['logueado'] !== true) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sintomas</title>
+    <title>Patologico</title>
     <link rel="icon" href="../img/logoindex.png">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
@@ -44,6 +54,20 @@ if (!isset($_SESSION['logueado']) || $_SESSION['logueado'] !== true) {
             overflow-y: auto;
             /* Solo el contenido tiene scroll */
             padding: 20px;
+        }
+
+        /* Estilos para el placeholder de imagen */
+        .image-placeholder {
+            min-height: 220px;
+            background-color: white;
+            border: 2px solid #c7c7c786;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #888;
+            font-style: italic;
+            overflow: hidden;
+            /* Para que las imágenes no se salgan del cuadro */
         }
     </style>
 </head>
@@ -89,7 +113,7 @@ if (!isset($_SESSION['logueado']) || $_SESSION['logueado'] !== true) {
     <main class="main-wrapper">
         <!--Barra de navegacion lateral-->
         <div class="d-flex flex-column flex-shrink-0 p-3 text-bg-dark" style="width: 280px ">
-            <a href="intExperto.php"
+            <a href="menu.php"
                 class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
                 <svg class="bi pe-none me-2" width="40" height="32" aria-hidden="true">
                     <use xlink:href="#bootstrap"></use>
@@ -111,7 +135,7 @@ if (!isset($_SESSION['logueado']) || $_SESSION['logueado'] !== true) {
                     </a>
                 </li>
                 <li>
-                    <a href="intExpertoSintomas.php" class="nav-link active" aria-current="page">
+                    <a href="intExpertoSintomas.php" class="nav-link text-white">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                             class="bi bi-lungs-fill" viewBox="0 0 16 16">
                             <path
@@ -121,7 +145,7 @@ if (!isset($_SESSION['logueado']) || $_SESSION['logueado'] !== true) {
                     </a>
                 </li>
                 <li>
-                    <a href="#" class="nav-link text-white">
+                    <a href="intExpertoPatologico.php" class="nav-link active" aria-current="page">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                             class="bi bi-file-earmark-medical-fill" viewBox="0 0 16 16">
                             <path
@@ -153,160 +177,100 @@ if (!isset($_SESSION['logueado']) || $_SESSION['logueado'] !== true) {
 
 
         <!--Informacion del contenedor-->
+
         <section class="content-area">
             <div class="card shadow-sm p-4">
-                <h3 class="text-center">Agregar Sintomas</h3>
-                <div style="grid-template-columns: 1fr 1fr;" class="d-grid gap-3">
+                <h3 class="text-center">Cuadro Patologico</h3>
+                <!--Selector e imagen -->
+                <div style="grid-template-columns: 1fr 1fr;" class="d-grid gap-0 row-gap-3">
                     <div class="p-2">
-                        <form id="formEnfermedad" action="../addSintomas/altas.php" method="post"
-                            enctype="multipart/form-data">
-                            <div class="mb-3">
-                                <label for="txtNombreEnfermedad" class="form-label fw-bold">Nombre</label>
-                                <input name="nombre" type="text" class="form-control" id="txtNombreEnfermedad"
-                                    aria-describedby="emailHelp" placeholder="Nombre de la Enfermedad, Eje: Covid-19"
-                                    required>
+                        <div class="col-md-10 mx-auto">
+                            <div class="mb-3 d-flex align-items-center">
+                                <label for="selectEnfermedad" class="form-label fw-bold mb-0 me-2">Enfermedad:
+                                </label>
+                                <select id="selectEnfermedad" class="form-select form-select-sm"
+                                    aria-label="Default select example">
+                                    <option selected>Selecciona una enfermedad...</option>
+                                    <?php 
+                                        if($resultadoEnfermedades) {
+                                            while($row = mysqli_fetch_assoc($resultadoEnfermedades)) { 
+                                                echo '<option value="'.$row['id'].'" data-img="'.$row['ruta_imagen'].'">'.$row['nombre'].'</option>';
+                                            }
+                                        }
+                                    ?>
+                                </select>
                             </div>
-                            <div class="mb-3">
-                                <label for="txtDescripcionEnfermedad" class="form-label fw-bold">Descripcion</label>
-                                <input name="descripcion" type="text" class="form-control" id="txtDescripcionEnfermedad"
-                                    placeholder="Descripcion de la Enfermedad, Eje: Dolor de cabeza" required>
+                            <div class="image-placeholder mt-2 text-center" id="img-enfermedad-container">
+                                <span>[Imagen de Enfermedad]</span>
                             </div>
-                            <div class="mb-3">
-                                <label for="fileImageForEnfermedad" class="form-label fw-bold">Imagen</label>
-                                <input type="file" class="form-control" name="imagen" accept="image/*"
-                                    onchange="mostrarImagen(event)">
-                            </div>
-                            <button type="submit" class="btn btn-primary">Guardar 🗃️</button>
-                            <button type="reset" class="btn btn-secondary" onclick="limpiarTodo()">Limpiar 🗑️</button>
-                            <button type="button" class="btn btn-warning"
-                                onclick="ejecutarModificacion()">Actualizar ✏️</button>
-                            <button type="button" class="btn btn-danger" onclick="ejecutarBaja()">Eliminar 🗑️</button>
-                        </form>
+                        </div>
                     </div>
-                    <div class="p-2 align-items-center justify-content-center text-center">
-                        <div class="mx-auto p-2" style="width: 400px;">
-                            <img id="vista-previa" src="../img/dog.jpg" class="img-thumbnail" alt="..."
-                                style="max-height: 280px; text-align: center;">
+                    <div class="p-2">
+                        <div class="col-md-10 mx-auto">
+                            <div class="mb-3 d-flex align-items-center">
+                                <label for="selectSintoma" class="form-label fw-bold mb-0 me-2">Sintoma:
+                                </label>
+                                <select id="selectSintoma" class="form-select form-select-sm"
+                                    aria-label="Default select example">
+                                    <option selected>Open this select menu</option>
+                                    <?php 
+                                        if($resultadoSintomas) {
+                                            while($row = mysqli_fetch_assoc($resultadoSintomas)) { 
+                                                echo '<option value="'.$row['id'].'" data-img="'.$row['ruta_imagen'].'">'.$row['nombre'].'</option>';
+                                            }
+                                        }
+                                    ?>
+                                </select>
+                            </div>
+                            <div class="image-placeholder mt-2 text-center" id="img-sintoma-container">
+                                <span>[Imagen de Síntoma]</span>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="card shadow-sm p-4 mt-3">
-                <h3 class="text-center">Operacion de CRUD</h3>
-                <p>Bienvenido, <strong>
-                        <?php echo $_SESSION['usuario']; ?>
-                    </strong></p>
-
-                <div class="mb-3">
-                    <form class="d-flex mt-3" role="search" onsubmit="return false;">
-                        <input class="form-control me-2" type="number" placeholder="Coloca el Id" aria-label="Search"
-                            name="enfe" />
-                        <button class="btn btn-success" type="button" onclick="ejecutarConsulta()">Buscar 🔍</button>
-                    </form>
+                <!--Selector del peso-->
+                <div class="col-md-5 mx-auto mt-2 mb-2">
+                    <div class="col-12 d-flex justify-content-center align-items-center">
+                        <label for="inputPeso" class="fw-bold me-2 fs-5">Peso:</label>
+                        <input type="number" id="inputPeso"
+                            class="form-control form-control-sm border-dark rounded-0 text-end" style="width: 70px;"
+                            value="0" min="0" max="100">
+                        <span class="fw-bold ms-1 fs-5">%</span>
+                    </div>
                 </div>
 
+                <!--TTabla donde se muestra la información-->
+                <div style="grid-template-columns: 1fr 7fr;" class="d-grid gap-3 mt-3 mb-2 col-md-11 mx-auto">
+                    <div class="p-2">
+                        <div class="d-grid gap-2">
+                            <button id="btnAnadir" type="button" class="btn btn-primary">Anadir</button>
+                            <button type="button" class="btn btn-success">Guardar</button>
+                            <button type="button" class="btn btn-secondary">Eliminar</button>
+                            <button type="button" class="btn btn-danger">Cancelar</button>
+                        </div>
+                    </div>
+                    <div class="p-2">
+                        <!--Creacion de la Tabla de Enfermedades-->
+                        <div class="table-responsive">
+                            <table class="table table-hover table-striped align-middle">
+                                <!--Encabezados de la tabla-->
+                                <thead class="table-primary">
+                                    <tr>
+                                        <th scope="col">Enfermedad</th>
+                                        <th scope="col">Sintoma</th>
+                                        <th scope="col">Peso</th>
+                                        <th scope="col" class="text-center">Acciones</th>
+                                    </tr>
+                                </thead>
+                                <!--Informacion de la tabla-->
+                                <tbody id="tabla-caracteristicas">
+                                </tbody>
+                            </table>
+                        </div>
 
-
-                <!--Creacion de la Tabla de Enfermedades-->
-                <div class="table-responsive">
-                    <table class="table table-hover table-striped align-middle">
-                        <!--Encabezados de la tabla-->
-                        <thead class="table-primary">
-                            <tr>
-                                <th scope="col" class="text-center">ID</th>
-                                <th scope="col">Nombre</th>
-                                <th scope="col">Descripcion</th>
-                                <th scope="col">Ruta Imagen</th>
-                                <th scope="col" class="text-center">Imagen</th>
-                                <th scope="col" class="text-center">Acciones</th>
-                            </tr>
-                        </thead>
-                        <!--Informacion de la tabla-->
-                        <tbody>
-                            <?php
-                            $sql = $conexion->query("SELECT * FROM registro_Sintomas");
-                            while ($datos = $sql->fetch_object()) {
-                                // Ajustamos la ruta de la imagen
-                                $ruta_imagen = $datos->ruta_imagen;
-                                ?>
-                            <tr>
-                                <th scope="row" class="text-center">
-                                    <?php echo $datos->id ?>
-                                </th>
-                                <td class="fw-semibold text-primary">
-                                    <?php echo $datos->nombre ?>
-                                </td>
-                                <td>
-                                    <?php echo $datos->descripcion ?>
-                                </td>
-                                <td class="text-muted small">
-                                    <?php echo $datos->ruta_imagen ?>
-                                </td>
-                                <td class="text-center">
-                                    <img width="80" height="80" src="<?= $ruta_imagen ?>" alt="enfermedad"
-                                        class="img-thumbnail rounded" style="object-fit: cover;">
-                                </td>
-                                <td class="text-center">
-                                    <div>
-                                        <a data-bs-toggle="modal"
-                                            data-bs-target="#staticBackdropEditar<?= $datos->id ?>"
-                                            class="btn btn-warning btn-sm fw-bold">Editar</a>
-                                        <a href="intExpertoSintomas.php?id=<?= $datos->id ?>"
-                                            class="btn btn-danger btn-sm fw-bold"
-                                            onclick="return eliminar2()">Eliminar</a>
-                                    </div>
-                                </td>
-                            </tr>
-
-                            <!--Modal para modificar los dartos-->
-                            <div class="modal fade" id="staticBackdropEditar<?= $datos->id ?>" tabindex="-1"
-                                aria-labelledby="staticBackdropLabel">
-                                <div class="modal-dialog modal-dialog-centered">
-                                    <div class="modal-content border-0 shadow">
-                                        <div class="modal-header bg-warning">
-                                            <h5 class="modal-title fw-bold" id="staticBackdropLabel">Modificar
-                                                Sintomas</h5>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body p-4">
-                                            <form action="" enctype="multipart/form-data" method="post">
-                                                <input type="hidden" value="<?= $datos->id ?>" name="id">
-                                                <input type="hidden" value="<?= $datos->ruta_imagen ?>"
-                                                    name="ruta_actual">
-
-                                                <div class="mb-3">
-                                                    <label class="form-label fw-bold">Nombre:</label>
-                                                    <input type="text" class="form-control" name="nombre"
-                                                        value="<?= $datos->nombre ?>" required>
-                                                </div>
-
-                                                <div class="mb-3">
-                                                    <label class="form-label fw-bold">Descripción:</label>
-                                                    <textarea name="descripcion" class="form-control" rows="3"
-                                                        required><?= $datos->descripcion ?></textarea>
-                                                </div>
-
-                                                <div class="mb-4">
-                                                    <label class="form-label fw-bold">Nueva Imagen (Opcional):</label>
-                                                    <input type="file" class="form-control" name="imagen">
-                                                </div>
-
-                                                <div class="d-grid">
-                                                    <input type="submit" value="Guardar Cambios" name="btneditar2"
-                                                        class="btn btn-success fw-bold">
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <?php } ?>
-                        </tbody>
-                    </table>
+                    </div>
                 </div>
-
             </div>
         </section>
 
@@ -320,113 +284,74 @@ if (!isset($_SESSION['logueado']) || $_SESSION['logueado'] !== true) {
         crossorigin="anonymous"></script>
     <script src="js/sidebars.js" class="astro-vvvwv3sm"></script>
 
+    <!--Selector de lista de Enfermedades y sintomas e imagenes-->
+    <script>
+        function actualizarImagen(selectId, containerId, textoVacio) {
+            const select = document.getElementById(selectId);
+            const container = document.getElementById(containerId);
 
-    <!--Limpiar-->
-    <script>
-        function limpiarTodo() {
-            // En mantenimiento no  me deja hacerlo
-        }
-    </script>
-    <!--Mostrar la imagen-->
-    <script>
-        function mostrarImagen(event) {
-            const archivo = event.target.files[0];
-            if (archivo) {
-                const urlTemporal = URL.createObjectURL(archivo);
-                const imagenPreview = document.getElementById('vista-previa');
-                imagenPreview.src = urlTemporal;
-                imagenPreview.style.display = 'block';
-            }
-        }
-    </script>
+            select.addEventListener('change', function () {
+                const opcionSeleccionada = this.options[this.selectedIndex];
+                const rutaImg = opcionSeleccionada.getAttribute('data-img');
 
-    <!--Eliminar-->
-    <script>
-        function eliminar2() {
-            let res = confirm("¿Desea eliminar este registro permanentemente?");
-            return res;
+                if (rutaImg && rutaImg.trim() !== "") {
+                    // Si hay una ruta de imagen válida, crea una etiqueta <img>
+                    container.innerHTML = `<img src="${rutaImg}" style="max-width: 100%; max-height: 215px; object-fit: contain;" alt="Imagen">`;
+                } else {
+                    // Si no hay imagen o se seleccionó la opción por defecto
+                    container.innerHTML = `<span>[${textoVacio}]</span>`;
+                }
+            });
         }
+
+        actualizarImagen('selectEnfermedad', 'img-enfermedad-container', 'Sin Imagen de Enfermedad');
+        actualizarImagen('selectSintoma', 'img-sintoma-container', 'Sin Imagen de Síntoma');
     </script>
 
-    <!--Consultar-->
+    <!-- A;adir de forma temporal-->
     <script>
-        async function ejecutarConsulta() {
-            let nombreSintoma = document.querySelector('input[name="enfe"]').value;
+        document.getElementById('btnAnadir').addEventListener('click', function () {
+            // 1. FALTABA DECLARAR ESTAS VARIABLES:
+            const selectEnfermedad = document.getElementById('selectEnfermedad');
+            const selectSintoma = document.getElementById('selectSintoma');
+            const inputPeso = document.getElementById('inputPeso');
+            const tabla = document.getElementById('tabla-caracteristicas'); // Faltaba esta también
 
-            if (nombreSintoma.trim() === "") {
-                alert("Por favor, escribe el nombre de la enfermedad que deseas buscar.");
+            const idEnfermedad = selectEnfermedad.value;
+            const idSintoma = selectSintoma.value;
+            const peso = inputPeso.value;
+
+            // 2. Quitamos el isNaN por si tu ID tiene letras (ej. "yuki")
+            if (idEnfermedad === "" || idSintoma === "" || peso <= 0) {
+                alert("Por favor, selecciona una enfermedad, un síntoma y asigna un peso válido.");
                 return;
             }
 
-            try {
-                let respuesta = await fetch('../addSintomas/consultutaUnica.php?nombre=' + encodeURIComponent(nombreSintoma));
-                let datos = await respuesta.json();
+            const txtEnfermedad = selectEnfermedad.options[selectEnfermedad.selectedIndex].text;
+            const txtSintoma = selectSintoma.options[selectSintoma.selectedIndex].text;
+            const tr = document.createElement('tr');
 
-                if (datos.error) {
-                    alert(datos.mensaje);
-                    document.querySelector('textarea[name="descripcion"]').value = "";
-                    document.getElementById('vista-previa').style.display = 'none';
-                } else {
-                    // 1. Llenamos el Nombre
-                    let campoNombre = document.querySelector('input[name="nombre"]');
-                    if (campoNombre) {
-                        campoNombre.value = datos.nombre;
-                    }
+            tr.className = 'fila-nueva';
+            tr.dataset.idEnfermedad = idEnfermedad;
+            tr.dataset.idSintoma = idSintoma;
+            tr.dataset.peso = peso;
 
-                    // 2. Llenamos la Descripción (Usamos corchetes para que funcione sea input o textarea)
-                    let campoDescripcion = document.querySelector('[name="descripcion"]');
-                    if (campoDescripcion) {
-                        campoDescripcion.value = datos.descripcion;
-                    }
+            tr.innerHTML = `
+                <td class="align-middle fw-semibold text-primary">${txtEnfermedad}</td>
+                <td class="align-middle fw-bold text-success">${txtSintoma} <span class="badge bg-warning text-dark ms-1">NUEVO</span></td>
+                <td class="text-center align-middle"><span class="badge bg-success px-2 py-1">${peso}%</span></td>
+                <td class="text-center align-middle"><small class="text-muted">Pendiente de guardar</small></td>
+            `;
 
-                    // 3. Mostramos la Imagen
-                    const imagenPreview = document.getElementById('vista-previa');
-                    if (datos.ruta_imagen && datos.ruta_imagen.trim() !== "") {
-                        let rutaLimpia = datos.ruta_imagen.replace("../../images/", "../images/");
-                        imagenPreview.src = rutaLimpia;
-                        imagenPreview.style.display = 'block';
-                    } else {
-                        imagenPreview.style.display = 'none';
-                    }
-                }
-            } catch (error) {
-                console.error("Error Fetch:", error);
-                alert("Error de conexión. Revisa la consola.");
+            // Si la tabla dice "Aún no hay síntomas...", la limpiamos antes de añadir el nuevo
+            if (tabla.innerHTML.includes('Aún no hay síntomas') || tabla.innerHTML.includes('No hay síntomas')) {
+                tabla.innerHTML = '';
             }
-        }
+            tabla.appendChild(tr);
+        });
     </script>
 
-    <!--Modificar-->
-    <script>
-        function ejecutarModificacion() {
-            let nombreEnfermedad = document.querySelector('input[name="nombre"]').value;
-            if (nombreEnfermedad.trim() === "") {
-                alert("Por favor, escribe el nombre de la enfermedad que deseas modificar.");
-            } else {
-                let confirmacion = confirm("¿Seguro que deseas modificar los datos de la enfermedad: " + nombreEnfermedad + "?");
-                if (confirmacion) {
-                    let formulario = document.querySelector('form');
-                    formulario.action = '../addSintomas/modificaciones.php';
-                    formulario.submit();
-                }
-            }
-        }
-    </script>
-
-    <!--Ejecusion de Bajas-->
-    <script>
-        function ejecutarBaja() {
-            let nombreEnfermedad = document.querySelector('input[name="nombre"]').value;
-            if (nombreEnfermedad.trim() === "") {
-                alert("Por favor, escribe el nombre del sintoma que deseas dar de baja.");
-            } else {
-                let confirmacion = confirm("¿Seguro que deseas eliminar el sintoma: " + nombreEnfermedad + "?");
-                if (confirmacion) {
-                    window.location.href = '../addSintomas/bajas.php?nombre=' + encodeURIComponent(nombreEnfermedad);
-                }
-            }
-        }
-    </script>
+    
 
 </body>
 

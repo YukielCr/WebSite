@@ -89,7 +89,7 @@ if (!isset($_SESSION['logueado']) || $_SESSION['logueado'] !== true) {
     <main class="main-wrapper">
         <!--Barra de navegacion lateral-->
         <div class="d-flex flex-column flex-shrink-0 p-3 text-bg-dark" style="width: 280px ">
-            <a href="intExperto.php"
+            <a href="menu.php"
                 class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
                 <svg class="bi pe-none me-2" width="40" height="32" aria-hidden="true">
                     <use xlink:href="#bootstrap"></use>
@@ -121,7 +121,7 @@ if (!isset($_SESSION['logueado']) || $_SESSION['logueado'] !== true) {
                     </a>
                 </li>
                 <li>
-                    <a href="#" class="nav-link text-white">
+                    <a href="intExpertoPatologico.php" class="nav-link text-white">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                             class="bi bi-file-earmark-medical-fill" viewBox="0 0 16 16">
                             <path

@@ -13,6 +13,23 @@ create table usuarios(
 insert into usuarios(usuario,contrasena) values
 ("root","root");
 
+
+-- Mensajes recibidos por el usuario 
+drop table mensajes;
+create table mensajes(
+	id int auto_increment primary key,
+    nombre varchar(50) not null,
+    telefono varchar(20) not null,
+    email varchar(50) not null,
+    mensaje varchar (200) not null,
+    fecha_envio timestamp default current_timestamp
+);
+
+
+
+
+
+-- Primera tabla 
 CREATE TABLE registro_enfermedades (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(100) NOT NULL,
@@ -40,39 +57,17 @@ CREATE TABLE cuadro_Patologico (
     FOREIGN KEY (id_sintoma) REFERENCES registro_Sintomas(id) ON DELETE CASCADE
 );
 
+
+-- Uso de los select 
 select *from registro_enfermedades;
 select *from registro_Sintomas;
 select *from cuadro_Patologico;
 select *from usuarios;
+select *from mensajes;
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+-- Integracion de datos
 INSERT INTO registro_enfermedades (nombre, descripcion, ruta_imagen) VALUES 
 ('Dengue', 'Enfermedad viral transmitida por mosquitos.', ''),
 ('Chikungunya', 'Fiebre viral transmitida por mosquitos que causa dolor articular.', ''),
