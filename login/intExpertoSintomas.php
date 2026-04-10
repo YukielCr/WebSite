@@ -28,7 +28,7 @@ if (!isset($_SESSION['logueado']) || $_SESSION['logueado'] !== true) {
             height: 100%;
             /* Obligatorio */
             margin: 0;
-            overflow: hidden;
+            /* overflow: hidden; */
             /* Evita scroll doble */
         }
 

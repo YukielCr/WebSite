@@ -1,3 +1,14 @@
+<?php
+// 1. Incluimos tu archivo de conexión
+require 'connection/conexion.php';
+
+// 2. Hacemos las consultas a las tablas correctas
+$sql_enfermedades = "SELECT * FROM registro_enfermedades LIMIT 8";
+$resultado_enfermedades = mysqli_query($conexion, $sql_enfermedades);
+
+$sql_sintomas = "SELECT * FROM registro_Sintomas LIMIT 8";
+$resultado_sintomas = mysqli_query($conexion, $sql_sintomas);
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -85,7 +96,8 @@
                     <img src="img/carru2.jpg" class="d-block w-100" style="filter: brightness(0.8);" alt="...">
                     <div class="carousel-caption d-flex flex-column justify-content-center align-items-center h-100"
                         style="top: 0; bottom: 0;">
-                        <h3 class="fw-bold mb-2 text-uppercase" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.8);">Segundo
+                        <h3 class="fw-bold mb-2 text-uppercase" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.8);">
+                            Segundo
                         </h3>
                     </div>
                 </div>
@@ -94,7 +106,8 @@
                     <img src="img/carru3.jpg" class="d-block w-100" style="filter: brightness(0.8);" alt="...">
                     <div class="carousel-caption d-flex flex-column justify-content-center align-items-center h-100"
                         style="top: 0; bottom: 0;">
-                        <h3 class="fw-bold mb-2 text-uppercase" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.8);">Tercero
+                        <h3 class="fw-bold mb-2 text-uppercase" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.8);">
+                            Tercero
                         </h3>
                     </div>
                 </div>
@@ -114,110 +127,99 @@
     </section>
 
     <br>
+
+
+
+
+
     <div class="text-center">
         <h3 class="container-xxl">Enfermedades</h3>
     </div>
     <br>
 
+
+
+
+
     <section class="container-xxl">
         <div class="container text-center">
-            <div class="row">
-                <div class="col">
-                    <div class="card" style="width: 18rem;">
-                        <img src="img/carru3.jpg" class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk
-                                of the
-                                cards content.</p>
+            <div class="row justify-content-center">
+                <?php
+                // 3. Mostramos las enfermedades si existen en la BD
+                if (mysqli_num_rows($resultado_enfermedades) > 0) {
+                    while ($row = mysqli_fetch_assoc($resultado_enfermedades)) {
+                        ?>
+                        <div class="col-md-auto mb-4">
+                            <div class="card" style="width: 18rem; height: 100%;">
+                                <img src="images/<?php echo htmlspecialchars($row['ruta_imagen']); ?>" class="card-img-top" style="height: 200px; object-fit: cover; object-position: center;" alt="Imagen de <?php echo htmlspecialchars($row['nombre']); ?>">
+                                <div class="card-body">
+                                    <h5 class="card-title"><?php echo htmlspecialchars($row['nombre']); ?></h5>
+                                    <p class="card-text"><?php echo htmlspecialchars($row['descripcion']); ?></p>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="card" style="width: 18rem;">
-                        <img src="img/carru3.jpg" class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk
-                                of the
-                                cards content.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="card" style="width: 18rem;">
-                        <img src="img/carru3.jpg" class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk
-                                of the
-                                cards content.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="card" style="width: 18rem;">
-                        <img src="img/carru3.jpg" class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk
-                                of the
-                                cards content.</p>
-                        </div>
-                    </div>
-                </div>
+                    <?php
+                    }
+                } else {
+                    echo "<div class='col'><p class='text-muted'>No hay enfermedades registradas en la base de datos.</p></div>";
+                }
+                ?>
             </div>
         </div>
     </section>
 
     <br>
-    <div class="text-center">
-        <h3 class="container-xxl">Sitomas</h3>
+
+    <div class="text-center mt-4">
+        <h3 class="container-xxl">Síntomas</h3>
     </div>
     <br>
 
     <section class="container-xxl">
         <div class="container text-center">
-            <div class="row">
-                <div class="col">
-                    <div class="card" style="width: 18rem;">
-                        <img src="img/carru3.jpg" class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk
-                                of the
-                                cards content.</p>
+            <div class="row justify-content-center">
+                <?php
+                // 4. Mostramos los síntomas si existen en la BD
+                if (mysqli_num_rows($resultado_sintomas) > 0) {
+                    while ($row = mysqli_fetch_assoc($resultado_sintomas)) {
+                        ?>
+                        <div class="col-md-auto mb-4">
+                            <div class="card" style="width: 18rem; height: 100%;">
+                                <img src="images/<?php echo htmlspecialchars($row['ruta_imagen']); ?>" class="card-img-top" style="height: 200px; object-fit: cover; object-position: center;" alt="Imagen de <?php echo htmlspecialchars($row['nombre']); ?>">
+                                <div class="card-body">
+                                    <h5 class="card-title"><?php echo htmlspecialchars($row['nombre']); ?></h5>
+                                    <p class="card-text"><?php echo htmlspecialchars($row['descripcion']); ?></p>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="card" style="width: 18rem;">
-                        <img src="img/carru3.jpg" class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk
-                                of the
-                                cards content.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="card" style="width: 18rem;">
-                        <img src="img/carru3.jpg" class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk
-                                of the
-                                cards content.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="card" style="width: 18rem;">
-                        <img src="img/carru3.jpg" class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk
-                                of the
-                                cards content.</p>
-                        </div>
-                    </div>
-                </div>
+                    <?php
+                    }
+                } else {
+                    echo "<div class='col'><p class='text-muted'>No hay síntomas registrados en la base de datos.</p></div>";
+                }
+                ?>
             </div>
         </div>
     </section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     <br>
@@ -288,7 +290,7 @@
                     <!--Formulario de registro Datos-->
                     <form action="includes/login.php" method="POST">
                         <?php if (isset($_GET['error'])): ?>
-                        <div class="alert alert-danger">Usuario o contraseña incorrectos</div>
+                            <div class="alert alert-danger">Usuario o contraseña incorrectos</div>
                         <?php endif; ?>
 
                         <div class="mb-3">
@@ -316,3 +318,8 @@
 </body>
 
 </html>
+
+<?php
+// 5. Cerramos la conexión al final del archivo
+mysqli_close($conexion);
+?>

@@ -43,7 +43,7 @@ $resultadoSintomas = mysqli_query($conexion, $querySintomas);
             height: 100%;
             /* Obligatorio */
             margin: 0;
-            overflow: hidden;
+            /* overflow: hidden; */
             /* Evita scroll doble */
         }
 
