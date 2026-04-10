@@ -188,17 +188,29 @@ $resultadoSintomas = mysqli_query($conexion, $querySintomas);
                 <h3 class="text-center mb-4">Cuadro Patológico por Enfermedad</h3>
 
                 <?php
-                // 1. Ordenamos la consulta por id_enfermedad para que queden agrupadas
-                $sql = $conexion->query("SELECT * FROM cuadro_Patologico ORDER BY id_enfermedad ASC");
+                // 1. Usamos INNER JOIN para traer los nombres de las enfermedades y los síntomas
+                $query = "SELECT 
+                            cp.id, 
+                            cp.id_enfermedad, 
+                            re.nombre AS nombre_enfermedad, 
+                            cp.id_sintoma, 
+                            rs.nombre AS nombre_sintoma, 
+                            cp.peso 
+                          FROM cuadro_Patologico cp
+                          INNER JOIN registro_enfermedades re ON cp.id_enfermedad = re.id
+                          INNER JOIN registro_Sintomas rs ON cp.id_sintoma = rs.id
+                          ORDER BY re.nombre ASC"; // Ordenamos alfabéticamente por el nombre de la enfermedad
                 
-                // 2. Variable de control para saber cuándo cambiamos de enfermedad
+                $sql = $conexion->query($query);
+                
+                // 2. Variable de control
                 $enfermedad_actual = null;
 
                 while ($datos = $sql->fetch_object()) {
-                    // Si el id de la enfermedad actual es diferente al de la fila, creamos una nueva tabla
+                    // Verificamos si cambiamos de enfermedad
                     if ($enfermedad_actual !== $datos->id_enfermedad) {
                         
-                        // Si no es la primera vez (es decir, ya había una tabla abierta), la cerramos
+                        // Cerramos la tabla anterior si existe
                         if ($enfermedad_actual !== null) {
                             echo '</tbody></table></div>';
                         }
@@ -207,7 +219,7 @@ $resultadoSintomas = mysqli_query($conexion, $querySintomas);
                         $enfermedad_actual = $datos->id_enfermedad;
                 ?>
                         <h5 class="mt-4 text-primary border-bottom pb-2">
-                            <i class="fa-solid fa-notes-medical"></i> ID Enfermedad: <?= $enfermedad_actual ?>
+                            <i class="fa-solid fa-notes-medical"></i> <?= $datos->nombre_enfermedad ?>
                         </h5>
                         
                         <div class="table-responsive mb-4">
@@ -215,21 +227,21 @@ $resultadoSintomas = mysqli_query($conexion, $querySintomas);
                                 <thead class="table-primary">
                                     <tr>
                                         <th scope="col" class="text-center">ID Registro</th>
-                                        <th scope="col">ID Síntoma</th>
+                                        <th scope="col">Síntoma</th>
                                         <th scope="col">Peso</th>
                                         <th scope="col" class="text-center">Acciones</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                 <?php
-                    } // Fin del if que separa tablas
+                    } // Fin del if
                 ?>
                                     <tr>
                                         <th scope="row" class="text-center">
                                             <?php echo $datos->id ?>
                                         </th>
                                         <td>
-                                            <?php echo $datos->id_sintoma ?>
+                                            <?php echo $datos->nombre_sintoma ?>
                                         </td>
                                         <td class="text-muted small fw-bold">
                                             <?php echo $datos->peso ?>
@@ -260,13 +272,13 @@ $resultadoSintomas = mysqli_query($conexion, $querySintomas);
                                                         <input type="hidden" value="<?= $datos->id ?>" name="id">
 
                                                         <div class="mb-3">
-                                                            <label class="form-label fw-bold">ID Enfermedad:</label>
-                                                            <input type="text" class="form-control text-muted" value="<?= $datos->id_enfermedad ?>" disabled>
+                                                            <label class="form-label fw-bold">Enfermedad:</label>
+                                                            <input type="text" class="form-control text-muted" value="<?= $datos->nombre_enfermedad ?>" disabled>
                                                         </div>
 
                                                         <div class="mb-3">
-                                                            <label class="form-label fw-bold">ID Síntoma:</label>
-                                                            <input type="text" class="form-control text-muted" value="<?= $datos->id_sintoma ?>" disabled>
+                                                            <label class="form-label fw-bold">Síntoma:</label>
+                                                            <input type="text" class="form-control text-muted" value="<?= $datos->nombre_sintoma ?>" disabled>
                                                         </div>
 
                                                         <div class="mb-4">
@@ -285,11 +297,10 @@ $resultadoSintomas = mysqli_query($conexion, $querySintomas);
                 <?php 
                 } // Fin del while
 
-                // 3. Al terminar el ciclo, si se imprimió al menos una tabla, debemos cerrar la última
+                // Cerramos la última tabla
                 if ($enfermedad_actual !== null) {
                     echo '</tbody></table></div>';
                 } else {
-                    // Si no hay datos en la tabla, mostramos un mensaje
                     echo '<div class="alert alert-info text-center mt-4">No hay registros patológicos todavía.</div>';
                 }
                 ?>
