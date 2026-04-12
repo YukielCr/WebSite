@@ -154,18 +154,33 @@ if (!isset($_SESSION['logueado']) || $_SESSION['logueado'] !== true) {
         <section class="content-area">
             <div class="card shadow-sm p-4">
                 <h3 class="text-center mb-4">Generar Reportes PDF</h3>
-                <div class="d-grid gap-3">
-                    <a href="../addMenu/pdfEnfermedades.php" target="_blank" class="btn btn-primary">
-                        <i class="bi bi-file-earmark-pdf"></i> Imprimir listados de Enfermedades
-                    </a>
-                    <a href="../addMenu/pdfSintomas.php" target="_blank" class="btn btn-secondary">
-                        <i class="bi bi-file-earmark-pdf"></i> Imprimir listado de síntomas
-                    </a>
+
+                <div class="d-grid gap-3 d-md-flex justify-content-center mb-4">
+                    <button onclick="cargarPDF('../addMenu/pdfEnfermedades.php')" class="btn btn-primary">
+                        <i class="bi bi-file-earmark-pdf"></i> Listado de Enfermedades
+                    </button>
+                    <button onclick="cargarPDF('../addMenu/pdfSintomas.php')" class="btn btn-secondary">
+                        <i class="bi bi-file-earmark-pdf"></i> Listado de Síntomas
+                    </button>
+
+                    <button type="button" onclick="descargarEnfermedades()" class="btn btn-success">
+                        <i class="bi bi-download"></i> Descargar Enfermedades
+                    </button>
+                    <!-- Que este booton descarge el pdf de enfermedades -->
                 </div>
 
-
-                <!-- Aqui se debe de bisualizar el pdf, dependiendo el boton que sea seleccionado tambien exitan los votones de imprimir o guardar como PDF-->
-
+                <div id="pdf-viewer-container" style="display: none;">
+                    <div class="d-flex justify-content-between align-items-center bg-light p-2 border">
+                        <span>Vista Previa del Documento</span>
+                        <div>
+                            <button onclick="imprimirVisor()" class="btn btn-sm btn-success">
+                                <i class="bi bi-printer"></i> Imprimir / Guardar PDF
+                            </button>
+                            <button onclick="cerrarVisor()" class="btn btn-sm btn-danger">Cerrar</button>
+                        </div>
+                    </div>
+                    <iframe id="pdf-iframe" src="" style="width: 100%; height: 600px;" frameborder="0"></iframe>
+                </div>
             </div>
 
 
@@ -180,6 +195,66 @@ if (!isset($_SESSION['logueado']) || $_SESSION['logueado'] !== true) {
         integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
         crossorigin="anonymous"></script>
     <script src="js/sidebars.js" class="astro-vvvwv3sm"></script>
+
+    <!-- iMPRESION DEL PDF -->
+<script>
+    function cargarPDF(ruta) {
+        const contenedor = document.getElementById('pdf-viewer-container');
+        const iframe = document.getElementById('pdf-iframe');
+
+        iframe.src = ruta;
+        contenedor.style.display = 'block';
+
+        // Desplazar suavemente hacia el visor
+        contenedor.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function cerrarVisor() {
+        document.getElementById('pdf-viewer-container').style.display = 'none';
+        document.getElementById('pdf-iframe').src = '';
+    }
+
+    function imprimirVisor() {
+        const iframe = document.getElementById('pdf-iframe');
+        if (iframe.src) {
+            iframe.contentWindow.focus();
+            iframe.contentWindow.print();
+        }
+    }
+</script>
+
+<!-- Descargar Enfermedades -->
+<script>
+function descargarEnfermedades() {
+    // Cambiamos el texto del botón temporalmente
+    const btnDescarga = document.querySelector('button.btn-success');
+    const textoOriginal = btnDescarga.innerHTML;
+    btnDescarga.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Generando PDF...';
+    btnDescarga.disabled = true;
+
+    // Creamos el iframe invisible pero renderizable
+    const hiddenIframe = document.createElement('iframe');
+    
+    // EL TRUCO: En lugar de display:none, lo sacamos de la pantalla pero le damos tamaño
+    hiddenIframe.style.position = 'absolute';
+    hiddenIframe.style.left = '-9999px';
+    hiddenIframe.style.width = '1000px'; // Ancho suficiente para la tabla
+    hiddenIframe.style.height = '1000px'; 
+    hiddenIframe.style.border = 'none';
+    
+    // Le pasamos el parámetro ?descargar=1
+    hiddenIframe.src = '../addMenu/pdfEnfermedades2.php?descargar=1';
+    document.body.appendChild(hiddenIframe);
+
+    // Damos un poco más de tiempo (4 segundos) para asegurar que el PDF se dibuje y descargue
+    setTimeout(() => {
+        btnDescarga.innerHTML = textoOriginal;
+        btnDescarga.disabled = false;
+        // Limpiamos el DOM
+        document.body.removeChild(hiddenIframe);
+    }, 4000);
+}
+</script>
 
 </body>
 

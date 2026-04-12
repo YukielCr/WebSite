@@ -54,8 +54,5 @@ require_once('../connection/conexion.php');
         </tbody>
     </table>
 
-    <div class="text-center mt-4 no-print">
-        <button onclick="window.print()" class="btn btn-success">Confirmar Impresión / Guardar PDF</button>
-    </div>
 </body>
 </html>
