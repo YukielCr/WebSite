@@ -50,9 +50,6 @@ if (!isset($_SESSION['logueado']) || $_SESSION['logueado'] !== true) {
 
 <body class="bg-secondary text-bg-primary">
     <?php
-    require "../connection/conexion.php";
-    require "../addSintomas/eliminar.php";
-    require "../addSintomas/editar.php";
     ?>
     <header>
         <nav class="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
@@ -156,34 +153,19 @@ if (!isset($_SESSION['logueado']) || $_SESSION['logueado'] !== true) {
 
         <section class="content-area">
             <div class="card shadow-sm p-4">
-                <h3 class="text-center">Mantenimiento</h3>
+                <h3 class="text-center mb-4">Generar Reportes PDF</h3>
+                <div class="d-grid gap-3">
+                    <a href="../addMenu/pdfEnfermedades.php" target="_blank" class="btn btn-primary">
+                        <i class="bi bi-file-earmark-pdf"></i> Imprimir listados de Enfermedades
+                    </a>
+                    <a href="../addMenu/pdfSintomas.php" target="_blank" class="btn btn-secondary">
+                        <i class="bi bi-file-earmark-pdf"></i> Imprimir listado de síntomas
+                    </a>
+                </div>
 
-                <div class=" text-center">
-                    <div class="row">
-                        <div class="col" style="width: 200px;">
-                            <img src="../img/mantenimiento.jpg" alt="Mantenimiento">
-                        </div>
-                        <div class="col" style="width: 200px;">
-                            <img src="../img/mantenimiento.jpg" alt="Mantenimiento">
-                        </div>
-                        <div class="col" style="width: 200px;">
-                            <img src="../img/mantenimiento.jpg" alt="Mantenimiento">
-                        </div>
-                    </div>
-                </div>
-                <div class=" text-center mt-4">
-                    <div class="row">
-                        <div class="col" style="width: 200px;">
-                            <img src="../img/mantenimiento.jpg" alt="Mantenimiento">
-                        </div>
-                        <div class="col" style="width: 200px;">
-                            <img src="../img/mantenimiento.jpg" alt="Mantenimiento">
-                        </div>
-                        <div class="col" style="width: 200px;">
-                            <img src="../img/mantenimiento.jpg" alt="Mantenimiento">
-                        </div>
-                    </div>
-                </div>
+
+                <!-- Aqui se debe de bisualizar el pdf, dependiendo el boton que sea seleccionado tambien exitan los votones de imprimir o guardar como PDF-->
+
             </div>
 
 
