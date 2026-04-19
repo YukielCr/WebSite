@@ -153,7 +153,7 @@ $resultadoSintomas = mysqli_query($conexion, $querySintomas);
                     </a>
                 </li>
                 <li>
-                    <a href="intExpertoPatologico.php" class="nav-link text-white">
+                    <a href="intExpertoPatologico.php" class="nav-link active">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                             class="bi bi-file-earmark-medical-fill" viewBox="0 0 16 16">
                             <path
@@ -234,13 +234,13 @@ $resultadoSintomas = mysqli_query($conexion, $querySintomas);
                         </h5>
                         
                         <div class="table-responsive mb-4">
-                            <table class="table table-hover table-striped align-middle">
+                            <table class="table table-hover table-striped align-middle" style="table-layout: fixed;">
                                 <thead class="table-primary">
                                     <tr>
-                                        <th scope="col" class="text-center">ID Registro</th>
-                                        <th scope="col">Síntoma</th>
-                                        <th scope="col">Peso</th>
-                                        <th scope="col" class="text-center">Acciones</th>
+                                        <th scope="col" class="text-center" style="width: 15%;">ID Registro</th>
+                                        <th scope="col" style="width: 45%;">Síntoma</th>
+                                        <th scope="col" style="width: 20%;">Peso</th>
+                                        <th scope="col" class="text-center" style="width: 20%;">Acciones</th>
                                     </tr>
                                 </thead>
                                 <tbody>
