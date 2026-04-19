@@ -97,7 +97,7 @@ $resultadoSintomas = mysqli_query($conexion, $querySintomas);
                             <a class="nav-link active" href="intExperto.php">Interfas Experto</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Interfas Usuario</a>
+                            <a class="nav-link" href="busAdelante.php">Interfas Usuario</a>
                         </li>
                     </ul>
                     <div class="d-block ms-auto">

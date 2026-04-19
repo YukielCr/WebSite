@@ -66,10 +66,10 @@ if (!isset($_SESSION['logueado']) || $_SESSION['logueado'] !== true) {
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link active" href="intExperto.php">Interfas Experto</a>
+                            <a class="nav-link" href="intExperto.php">Interfas Experto</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="busAdelante.php">Interfas Usuario</a>
+                            <a class="nav-link active" href="busAdelante.php">Interfas Usuario</a>
                         </li>
                     </ul>
                     <div class="d-block ms-auto">
@@ -86,7 +86,7 @@ if (!isset($_SESSION['logueado']) || $_SESSION['logueado'] !== true) {
     <main class="main-wrapper">
         <!--Barra de navegacion lateral-->
         <div class="d-flex flex-column flex-shrink-0 p-3 text-bg-dark" style="width: 280px ">
-            <a href="menu.php"
+            <a href="menuUsuario.php"
                 class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
                 <svg class="bi pe-none me-2" width="40" height="32" aria-hidden="true">
                     <use xlink:href="#bootstrap"></use>
@@ -96,35 +96,37 @@ if (!isset($_SESSION['logueado']) || $_SESSION['logueado'] !== true) {
             <hr />
             <ul class="nav nav-pills flex-column mb-auto">
                 <li class="nav-item">
-                    <a href="intExperto.php" class="nav-link text-white">
+                    <a href="busAdelante.php" class="nav-link text-white">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                            class="bi bi-bandaid" viewBox="0 0 16 16">
-                            <path
-                                d="M14.121 1.879a3 3 0 0 0-4.242 0L8.733 3.026l4.261 4.26 1.127-1.165a3 3 0 0 0 0-4.242M12.293 8 8.027 3.734 3.738 8.031 8 12.293zm-5.006 4.994L3.03 8.737 1.879 9.88a3 3 0 0 0 4.241 4.24l.006-.006 1.16-1.121ZM2.679 7.676l6.492-6.504a4 4 0 0 1 5.66 5.653l-1.477 1.529-5.006 5.006-1.523 1.472a4 4 0 0 1-5.653-5.66l.001-.002 1.505-1.492z" />
-                            <path
-                                d="M5.56 7.646a.5.5 0 1 1-.706.708.5.5 0 0 1 .707-.708Zm1.415-1.414a.5.5 0 1 1-.707.707.5.5 0 0 1 .707-.707M8.39 4.818a.5.5 0 1 1-.708.707.5.5 0 0 1 .707-.707Zm0 5.657a.5.5 0 1 1-.708.707.5.5 0 0 1 .707-.707ZM9.803 9.06a.5.5 0 1 1-.707.708.5.5 0 0 1 .707-.707Zm1.414-1.414a.5.5 0 1 1-.706.708.5.5 0 0 1 .707-.708ZM6.975 9.06a.5.5 0 1 1-.707.708.5.5 0 0 1 .707-.707ZM8.39 7.646a.5.5 0 1 1-.708.708.5.5 0 0 1 .707-.708Zm1.413-1.414a.5.5 0 1 1-.707.707.5.5 0 0 1 .707-.707" />
+                            class="bi bi-arrow-return-right" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd"
+                                d="M1.5 1.5A.5.5 0 0 0 1 2v4.8a2.5 2.5 0 0 0 2.5 2.5h9.793l-3.347 3.346a.5.5 0 0 0 .708.708l4.2-4.2a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 8.3H3.5A1.5 1.5 0 0 1 2 6.8V2a.5.5 0 0 0-.5-.5" />
                         </svg>
-                        Agregar Enfermedad
+                        Busqueda hacia Adelante
                     </a>
                 </li>
                 <li>
-                    <a href="intExpertoSintomas.php" class="nav-link text-white">
+                    <a href="#" class="nav-link text-white">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                            class="bi bi-lungs-fill" viewBox="0 0 16 16">
-                            <path
-                                d="M8 1a.5.5 0 0 1 .5.5v5.243L9 7.1V4.72C9 3.77 9.77 3 10.72 3c.524 0 1.023.27 1.443.592.431.332.847.773 1.216 1.229.736.908 1.347 1.946 1.58 2.48.176.405.393 1.16.556 2.011.165.857.283 1.857.24 2.759-.04.867-.232 1.79-.837 2.33-.67.6-1.622.556-2.741-.004l-1.795-.897A2.5 2.5 0 0 1 9 11.264V8.329l-1-.715-1 .715V7.214c-.1 0-.202.03-.29.093l-2.5 1.786a.5.5 0 1 0 .58.814L7 8.329v2.935A2.5 2.5 0 0 1 5.618 13.5l-1.795.897c-1.12.56-2.07.603-2.741.004-.605-.54-.798-1.463-.838-2.33-.042-.902.076-1.902.24-2.759.164-.852.38-1.606.558-2.012.232-.533.843-1.571 1.579-2.479.37-.456.785-.897 1.216-1.229C4.257 3.27 4.756 3 5.28 3 6.23 3 7 3.77 7 4.72V7.1l.5-.357V1.5A.5.5 0 0 1 8 1m3.21 8.907a.5.5 0 1 0 .58-.814l-2.5-1.786A.5.5 0 0 0 9 7.214V8.33z" />
+                            class="bi bi-arrow-return-left" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd"
+                                d="M14.5 1.5a.5.5 0 0 1 .5.5v4.8a2.5 2.5 0 0 1-2.5 2.5H2.707l3.347 3.346a.5.5 0 0 1-.708.708l-4.2-4.2a.5.5 0 0 1 0-.708l4-4a.5.5 0 1 1 .708.708L2.707 8.3H12.5A1.5 1.5 0 0 0 14 6.8V2a.5.5 0 0 1 .5-.5" />
                         </svg>
-                        Agregar Sintoma
+                        Busqueda hacia Atrás
                     </a>
                 </li>
                 <li>
-                    <a href="intExpertoPatologico.php" class="nav-link text-white">
+                    <a href="#" class="nav-link text-white">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                            class="bi bi-file-earmark-medical-fill" viewBox="0 0 16 16">
+                            class="bi bi-clipboard-check" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd"
+                                d="M10.854 7.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 9.793l2.646-2.647a.5.5 0 0 1 .708 0" />
                             <path
-                                d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0M9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1m-3 2v.634l.549-.317a.5.5 0 1 1 .5.866L7 7l.549.317a.5.5 0 1 1-.5.866L6.5 7.866V8.5a.5.5 0 0 1-1 0v-.634l-.549.317a.5.5 0 1 1-.5-.866L5 7l-.549-.317a.5.5 0 0 1 .5-.866l.549.317V5.5a.5.5 0 1 1 1 0m-2 4.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1 0-1m0 2h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1 0-1" />
+                                d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1z" />
+                            <path
+                                d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0z" />
                         </svg>
-                        Cuadro Patologico
+                        Modulo de Explicacion
                     </a>
                 </li>
             </ul>
@@ -197,64 +199,64 @@ if (!isset($_SESSION['logueado']) || $_SESSION['logueado'] !== true) {
     <script src="js/sidebars.js" class="astro-vvvwv3sm"></script>
 
     <!-- iMPRESION DEL PDF -->
-<script>
-    function cargarPDF(ruta) {
-        const contenedor = document.getElementById('pdf-viewer-container');
-        const iframe = document.getElementById('pdf-iframe');
+    <script>
+        function cargarPDF(ruta) {
+            const contenedor = document.getElementById('pdf-viewer-container');
+            const iframe = document.getElementById('pdf-iframe');
 
-        iframe.src = ruta;
-        contenedor.style.display = 'block';
+            iframe.src = ruta;
+            contenedor.style.display = 'block';
 
-        // Desplazar suavemente hacia el visor
-        contenedor.scrollIntoView({ behavior: 'smooth' });
-    }
-
-    function cerrarVisor() {
-        document.getElementById('pdf-viewer-container').style.display = 'none';
-        document.getElementById('pdf-iframe').src = '';
-    }
-
-    function imprimirVisor() {
-        const iframe = document.getElementById('pdf-iframe');
-        if (iframe.src) {
-            iframe.contentWindow.focus();
-            iframe.contentWindow.print();
+            // Desplazar suavemente hacia el visor
+            contenedor.scrollIntoView({ behavior: 'smooth' });
         }
-    }
-</script>
 
-<!-- Descargar Enfermedades -->
-<script>
-function descargarEnfermedades() {
-    // Cambiamos el texto del botón temporalmente
-    const btnDescarga = document.querySelector('button.btn-success');
-    const textoOriginal = btnDescarga.innerHTML;
-    btnDescarga.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Generando PDF...';
-    btnDescarga.disabled = true;
+        function cerrarVisor() {
+            document.getElementById('pdf-viewer-container').style.display = 'none';
+            document.getElementById('pdf-iframe').src = '';
+        }
 
-    // Creamos el iframe invisible pero renderizable
-    const hiddenIframe = document.createElement('iframe');
-    
-    // EL TRUCO: En lugar de display:none, lo sacamos de la pantalla pero le damos tamaño
-    hiddenIframe.style.position = 'absolute';
-    hiddenIframe.style.left = '-9999px';
-    hiddenIframe.style.width = '1000px'; // Ancho suficiente para la tabla
-    hiddenIframe.style.height = '1000px'; 
-    hiddenIframe.style.border = 'none';
-    
-    // Le pasamos el parámetro ?descargar=1
-    hiddenIframe.src = '../addMenu/pdfEnfermedades2.php?descargar=1';
-    document.body.appendChild(hiddenIframe);
+        function imprimirVisor() {
+            const iframe = document.getElementById('pdf-iframe');
+            if (iframe.src) {
+                iframe.contentWindow.focus();
+                iframe.contentWindow.print();
+            }
+        }
+    </script>
 
-    // Damos un poco más de tiempo (4 segundos) para asegurar que el PDF se dibuje y descargue
-    setTimeout(() => {
-        btnDescarga.innerHTML = textoOriginal;
-        btnDescarga.disabled = false;
-        // Limpiamos el DOM
-        document.body.removeChild(hiddenIframe);
-    }, 4000);
-}
-</script>
+    <!-- Descargar Enfermedades -->
+    <script>
+        function descargarEnfermedades() {
+            // Cambiamos el texto del botón temporalmente
+            const btnDescarga = document.querySelector('button.btn-success');
+            const textoOriginal = btnDescarga.innerHTML;
+            btnDescarga.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Generando PDF...';
+            btnDescarga.disabled = true;
+
+            // Creamos el iframe invisible pero renderizable
+            const hiddenIframe = document.createElement('iframe');
+
+            // EL TRUCO: En lugar de display:none, lo sacamos de la pantalla pero le damos tamaño
+            hiddenIframe.style.position = 'absolute';
+            hiddenIframe.style.left = '-9999px';
+            hiddenIframe.style.width = '1000px'; // Ancho suficiente para la tabla
+            hiddenIframe.style.height = '1000px';
+            hiddenIframe.style.border = 'none';
+
+            // Le pasamos el parámetro ?descargar=1
+            hiddenIframe.src = '../addMenu/pdfEnfermedades2.php?descargar=1';
+            document.body.appendChild(hiddenIframe);
+
+            // Damos un poco más de tiempo (4 segundos) para asegurar que el PDF se dibuje y descargue
+            setTimeout(() => {
+                btnDescarga.innerHTML = textoOriginal;
+                btnDescarga.disabled = false;
+                // Limpiamos el DOM
+                document.body.removeChild(hiddenIframe);
+            }, 4000);
+        }
+    </script>
 
 </body>
 

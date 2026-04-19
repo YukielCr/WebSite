@@ -17,6 +17,10 @@ $resultadoEnfermedades = mysqli_query($conexion, $queryEnfermedades);
 //Sintomas
 $querySintomas = "SELECT id, nombre, ruta_imagen FROM registro_Sintomas";
 $resultadoSintomas = mysqli_query($conexion, $querySintomas);
+
+
+
+
 ?>
 
 <!DOCTYPE html>
@@ -101,7 +105,7 @@ $resultadoSintomas = mysqli_query($conexion, $querySintomas);
                             <a class="nav-link active" href="intExperto.php">Interfas Experto</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Interfas Usuario</a>
+                            <a class="nav-link" href="busAdelante.php">Interfas Usuario</a>
                         </li>
                     </ul>
                     <div class="d-block ms-auto">
@@ -195,23 +199,30 @@ $resultadoSintomas = mysqli_query($conexion, $querySintomas);
                             re.nombre AS nombre_enfermedad, 
                             cp.id_sintoma, 
                             rs.nombre AS nombre_sintoma, 
-                            cp.peso 
+                            cp.peso,
+                            (SELECT SUM(peso) FROM cuadro_Patologico WHERE id_enfermedad = cp.id_enfermedad) AS peso_total
                           FROM cuadro_Patologico cp
                           INNER JOIN registro_enfermedades re ON cp.id_enfermedad = re.id
                           INNER JOIN registro_Sintomas rs ON cp.id_sintoma = rs.id
-                          ORDER BY re.nombre ASC"; // Ordenamos alfabéticamente por el nombre de la enfermedad
+                          ORDER BY re.nombre ASC"; 
                 
                 $sql = $conexion->query($query);
                 
-                // 2. Variable de control
+                // 2. Variables de control
                 $enfermedad_actual = null;
+                $peso_total_actual = 0; // Guardará la suma de la tabla que se está procesando
 
                 while ($datos = $sql->fetch_object()) {
                     // Verificamos si cambiamos de enfermedad
                     if ($enfermedad_actual !== $datos->id_enfermedad) {
                         
-                        // Cerramos la tabla anterior si existe
+                        // Si ya había una tabla abierta, le agregamos la fila de TOTAL y la cerramos
                         if ($enfermedad_actual !== null) {
+                            echo '<tr class="table-info">';
+                            echo '<td colspan="2" class="text-end fw-bold">Suma Total:</td>';
+                            echo '<td class="fw-bold text-success">' . $peso_total_actual . '</td>';
+                            echo '<td></td>'; // Celda vacía debajo de las acciones
+                            echo '</tr>';
                             echo '</tbody></table></div>';
                         }
                         
@@ -235,6 +246,9 @@ $resultadoSintomas = mysqli_query($conexion, $querySintomas);
                                 <tbody>
                 <?php
                     } // Fin del if
+                    
+                    // Actualizamos el peso total actual en cada ciclo
+                    $peso_total_actual = $datos->peso_total;
                 ?>
                                     <tr>
                                         <th scope="row" class="text-center">
@@ -297,8 +311,13 @@ $resultadoSintomas = mysqli_query($conexion, $querySintomas);
                 <?php 
                 } // Fin del while
 
-                // Cerramos la última tabla
+                // Cerramos la ÚLTIMA tabla y le agregamos su fila de TOTAL
                 if ($enfermedad_actual !== null) {
+                    echo '<tr class="table-info">';
+                    echo '<td colspan="2" class="text-end fw-bold">Suma Total:</td>';
+                    echo '<td class="fw-bold text-success">' . $peso_total_actual . '</td>';
+                    echo '<td></td>';
+                    echo '</tr>';
                     echo '</tbody></table></div>';
                 } else {
                     echo '<div class="alert alert-info text-center mt-4">No hay registros patológicos todavía.</div>';
