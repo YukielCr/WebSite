@@ -171,7 +171,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST['sintomas_ids'])) {
                 <svg class="bi pe-none me-2" width="40" height="32" aria-hidden="true">
                     <use xlink:href="#bootstrap"></use>
                 </svg>
-                <span class="fs-4">MENÚ I.E.</span>
+                <span class="fs-4">MENÚ I.U.</span>
             </a>
             <hr />
             <ul class="nav nav-pills flex-column mb-auto">
